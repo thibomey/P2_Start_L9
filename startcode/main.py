@@ -1,20 +1,43 @@
 import pygame
-import time
 from snake import Snake
-from food import Food
+from snake import veld_grootte
 
-# kleuren
 
-# schermgrootte
+breedte = 800
+hoogte = 600
+pygame.init()
+kleur_achtergrond = (0,0,0)
+spel_snelheid = 5
 
-# Snelheid van het spel
+venster = pygame.display.set_mode((breedte, hoogte))
+pygame.display.set_caption('Snake')
 
-# Initialiseren van de pygame-module
+pygame.time.wait(5000)
 
-# Creëer een venster met opgegeven breedte en hoogte
+def game_lus():
+    snake = Snake(breedte/2, hoogte/2)
 
-# Functie om de score op het scherm te tonen
+    game_over = False
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_over = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT and snake.x_verandering == 0:
+                    snake.x_verandering = -veld_grootte
+                    snake.y_verandering = 0
+                elif event.key == pygame.K_RIGHT and snake.x_verandering == 0:
+                    snake.x_verandering = veld_grootte
+                    snake.y_verandering = 0
+                elif event.key == pygame.K_UP and snake.y_verandering == 0:
+                    snake.y_verandering = -veld_grootte
 
-# Hoofdloop van het spel
+        snake.beweeg()
+        venster.fill(0, 0, 0)
+        snake.teken(venster)
+        pygame.display.update()
+        time.sleep(1/5 )
 
-# Start de hoofdloop van het spel
+
+
+game_lus()
